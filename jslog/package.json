@@ -1,7 +1,7 @@
 {
-  "name": "jslog",
+  "name": "@mycloudlab/jslog",
   "version": "1.0.0",
-  "description": "A nice greeter",
+  "description": "Log library, for usage on browser and aggregate logs into server and loki dashboard",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",  "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
@@ -13,9 +13,19 @@
     "preversion" : "npm run lint",
     "postversion" : "git push && git push --tags"
   },
-  "keywords": ["logging", "log","loki"],
-  "author": "euprogramador@gmail.com",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mycloudlab/jslog"
+  },
+  "keywords": ["server","logging", "log","browser"],
+  "author": {
+    "name": "David Fannin",
+    "email": "dbfannin.npm@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/mycloudlab/jslog/issues"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.2.3",
     "jest": "^29.3.1",

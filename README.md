@@ -1,4 +1,4 @@
-# JSLOG-STACK
+# JSLOGK
 
 Stack completa para recebimento de logs javascript do browser para o servidor.
 
