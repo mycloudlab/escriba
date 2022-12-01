@@ -1,0 +1,55 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: gelf
+  gelf: 
+    listen_address: 0.0.0.0:12201
+    labels:
+      job: plataforma-educar
+  pipeline_stages:
+    - match: 
+        selector: '{job="plataforma-educar"}'
+        stages:
+          - json:
+              expressions:
+                layer: _layer
+                time: _Time
+                full_message: full_message
+                request_origin: _request_origin
+                request_path: _request_path
+                level: _Severity
+                loggerName: _LoggerName
+                stackTrace: _StackTrace
+                auth_login: _auth_login
+                auth_tenant: _auth_tenant
+                auth_nome: _auth_nome
+                traceId: _traceId
+                spanId: _spanId
+          - labels:
+              layer:
+              level:
+              time:
+              short_message:
+              request_path:
+              request_origin:
+              loggerName:
+              auth_login:
+              auth_tenant:
+              auth_nome:
+              traceId:
+              spanId:
+          - template:
+              source: output
+              template: '{{.level}} - {{.full_message}} {{ default "" .stackTrace }}'
+          - template:
+              source: level
+              template: "{{.level}} | lower"
+          - output:
+              source: output
+    
