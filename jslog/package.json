@@ -1,26 +1,32 @@
 {
-  "name": "@mycloudlab/jslog",
+  "name": "@mycloudlab/escriba-browser",
   "version": "1.0.0",
   "description": "Log library, for usage on browser and aggregate logs into server and loki dashboard",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",  "scripts": {
+  "types": "lib/index.d.ts",
+  "scripts": {
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "build": "tsc",
     "test": "jest --config jestconfig.json",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint",
-    "postversion" : "git push && git push --tags"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mycloudlab/jslog"
   },
-  "keywords": ["server","logging", "log","browser"],
+  "keywords": [
+    "server",
+    "logging",
+    "log",
+    "browser"
+  ],
   "author": {
-    "name": "David Fannin",
-    "email": "dbfannin.npm@gmail.com"
+    "name": "Carlos Alberto",
+    "email": "euprogramador@gmail.com"
   },
   "bugs": {
     "url": "https://github.com/mycloudlab/jslog/issues"
@@ -37,5 +43,8 @@
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "dependencies": {
+    "stacktrace-js": "^2.0.2"
+  }
 }
