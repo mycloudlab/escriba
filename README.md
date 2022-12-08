@@ -15,6 +15,7 @@ In addition, the project uses Promtail to forward the logs to Loki for storage a
 ## Features
 
 - multiple levels of frontend and server logs
+- MDC (mapped diagnostic context) is supported
 - proper processing of sourcemaps on the server side
 - restriction on which domains are accepted for processing
 - customization and transformation of the request to obtain the application's source-map.
