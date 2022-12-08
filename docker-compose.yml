@@ -1,6 +1,7 @@
 version: 3
 
 services:
+
   loki:
     image: grafana/loki
     command: -config.file=/etc/loki/local-config.yaml
@@ -12,42 +13,6 @@ services:
     command: -config.file=/etc/promtail/config.yml
     depends_on:
       - loki
-
-  jslog:
-    hostname: jslog
-    build: ./jslog
-    context: ./jslog
-    command: "/bin/bash -c 'trap : TERM INT; sleep infinity & wait'"
-    environment:
-      TZ: America/Sao_Paulo
-    volumes:
-      - ./jslog:/jslog:z
-
-  jslog-angular:
-    hostname: jslog-angular
-    build: ./jslog-angular
-    context: ./jslog-angular
-    command: "/bin/bash -c 'trap : TERM INT; sleep infinity & wait'"
-    environment:
-      TZ: America/Sao_Paulo
-    volumes:
-      - ./jslog-angular:/jslog-angular:z
-
-
-  log-server:
-    hostname: log-server
-    build: ./log-server
-    context: ./log-server
-    command: "/bin/bash -c 'trap : TERM INT; sleep infinity & wait'"
-    environment:
-      TZ: America/Sao_Paulo
-    volumes:
-      - ./dev-assets/maven/settings.xml:/usr/share/maven/conf/settings.xml:z
-      - ./tmp/mvn:/.m2/repository:z
-      - ./log-server:/log-server:z
-    ports:
-      - 8787:8787 # debug java port
-      - 8888:8888
 
   grafana:
     image: grafana/grafana
@@ -61,3 +26,38 @@ services:
       GF_USERS_ALLOW_SIGN_UP: false
     ports:
       - 3000:3000
+
+  browser:
+    hostname: browser
+    build: ./escriba-browser
+    context: ./escriba-browser
+    command: "/bin/bash -c 'trap : TERM INT; sleep infinity & wait'"
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./escriba-browser:/escriba-browser:z
+
+  angular:
+    hostname: angular
+    build: ./escriba-angular
+    context: ./escriba-angular
+    command: "/bin/bash -c 'trap : TERM INT; sleep infinity & wait'"
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./escriba-angular:/escriba-angular:z
+
+  server:
+    hostname: server
+    build: ./escriba-server
+    context: ./escriba-server
+    command: "/bin/bash -c 'trap : TERM INT; sleep infinity & wait'"
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./dev-assets/maven/settings.xml:/usr/share/maven/conf/settings.xml:z
+      - ./tmp/mvn:/.m2/repository:z
+      - ./escriba-server:/escriba-server:z
+    ports:
+      - 8787:8787 # debug java port
+      - 8888:8888

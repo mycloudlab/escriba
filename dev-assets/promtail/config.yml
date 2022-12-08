@@ -11,24 +11,19 @@ scrape_configs:
   gelf: 
     listen_address: 0.0.0.0:12201
     labels:
-      job: plataforma-educar
+      job: escriba-browser-logging
   pipeline_stages:
     - match: 
-        selector: '{job="plataforma-educar"}'
+        selector: '{job="escriba-browser-logging"}'
         stages:
           - json:
               expressions:
                 layer: _layer
                 time: _Time
                 full_message: full_message
-                request_origin: _request_origin
-                request_path: _request_path
                 level: _Severity
                 loggerName: _LoggerName
                 stackTrace: _StackTrace
-                auth_login: _auth_login
-                auth_tenant: _auth_tenant
-                auth_nome: _auth_nome
                 traceId: _traceId
                 spanId: _spanId
           - labels:

@@ -27,182 +27,9 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 13639,
   "graphTooltip": 0,
-  "links": [
-    {
-      "asDropdown": false,
-      "icon": "bolt",
-      "includeVars": false,
-      "keepTime": false,
-      "tags": [],
-      "targetBlank": false,
-      "title": "Limpar seleção do traceId",
-      "tooltip": "",
-      "type": "link",
-      "url": "/d/sadlil-loki-apps-dashboard/logs-app?${__url_time_range}&${app:queryparam}&${search:queryparam}&${level:queryparam}&${tenant:queryparam}&${login:queryparam}&${usuario:queryparam}&var-traceId=.*"
-    }
-  ],
+  "links": [],
   "liveNow": false,
   "panels": [
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 10,
-      "panels": [
-        {
-          "datasource": {
-            "type": "jaeger",
-            "uid": "PC9A941E8F2E49454"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "custom": {
-                "align": "auto",
-                "displayMode": "auto",
-                "inspect": true
-              },
-              "links": [
-                {
-                  "title": "View trace",
-                  "url": "/d/sadlil-loki-apps-dashboard/logs-app?${__url_time_range}&${app:queryparam}&${search:queryparam}&${level:queryparam}&${tenant:queryparam}&${login:queryparam}&${usuario:queryparam}&var-traceId=${__data.fields.Trace}"
-                }
-              ],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 10,
-            "w": 12,
-            "x": 0,
-            "y": 1
-          },
-          "id": 7,
-          "links": [],
-          "options": {
-            "footer": {
-              "enablePagination": false,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "showHeader": true,
-            "sortBy": []
-          },
-          "pluginVersion": "9.2.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "jaeger",
-                "uid": "PC9A941E8F2E49454"
-              },
-              "key": "Q-6c430cba-5e13-4103-bd7d-c7fe9325de1a-0",
-              "queryType": "search",
-              "refId": "A",
-              "service": "plataforma-educar "
-            }
-          ],
-          "title": "Traces",
-          "transformations": [
-            {
-              "id": "calculateField",
-              "options": {
-                "alias": "Trace",
-                "mode": "reduceRow",
-                "reduce": {
-                  "include": [
-                    "Trace ID"
-                  ],
-                  "reducer": "firstNotNull"
-                },
-                "replaceFields": false
-              }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {
-                  "Trace ID": true
-                },
-                "indexByName": {
-                  "Duration": 4,
-                  "Start time": 3,
-                  "Trace": 1,
-                  "Trace ID": 0,
-                  "Trace name": 2
-                },
-                "renameByName": {
-                  "Trace": ""
-                }
-              }
-            }
-          ],
-          "type": "table"
-        },
-        {
-          "datasource": {
-            "type": "jaeger",
-            "uid": "PC9A941E8F2E49454"
-          },
-          "description": "",
-          "gridPos": {
-            "h": 10,
-            "w": 12,
-            "x": 12,
-            "y": 1
-          },
-          "id": 8,
-          "pluginVersion": "9.2.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "jaeger",
-                "uid": "PC9A941E8F2E49454"
-              },
-              "key": "Q-2c42eccf-6fb6-478a-a3d2-0b5b601b0286-0",
-              "query": "$traceId",
-              "refId": "A"
-            }
-          ],
-          "title": "Trace selecionado",
-          "type": "traces"
-        }
-      ],
-      "title": "Tracing",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
-      "id": 12,
-      "panels": [],
-      "title": "Logging",
-      "type": "row"
-    },
     {
       "aliasColors": {
         "ERROR": "dark-red",
@@ -227,7 +54,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 2
+        "y": 0
       },
       "hiddenSeries": false,
       "id": 6,
@@ -263,7 +90,7 @@
             "uid": "P8E80F9AEF21F6940"
           },
           "editorMode": "code",
-          "expr": "sum by(level) (count_over_time({job=\"$app\", level=~\"$level\"} |= `$search` | auth_tenant =~ \"^$tenant$\" and auth_login =~\"^$login$\" and auth_nome =~\"^$usuario$\" and traceId =~\"^$traceId$\" [$__interval]   ))",
+          "expr": "sum by(level) (count_over_time({job=\"$app\", level=~\"$level\"} |= `$search` [$__interval]   ))",
           "legendFormat": "{{level}}",
           "queryType": "range",
           "refId": "A",
@@ -310,7 +137,7 @@
         "h": 25,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 6
       },
       "id": 2,
       "maxDataPoints": "",
@@ -331,7 +158,7 @@
             "uid": "P8E80F9AEF21F6940"
           },
           "editorMode": "code",
-          "expr": "{job=\"$app\", level=~\"$level\"} |= `$search` | auth_tenant =~ \"^$tenant$\" and auth_login =~\"^$login$\" and auth_nome =~\"^$usuario$\" and traceId =~\"^$traceId$\" ",
+          "expr": "{job=\"$app\", level=~\"$level\"} |= `$search` ",
           "hide": false,
           "legendFormat": "",
           "queryType": "range",
@@ -343,7 +170,7 @@
       "type": "logs"
     }
   ],
-  "refresh": false,
+  "refresh": "5s",
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -352,8 +179,8 @@
       {
         "current": {
           "selected": false,
-          "text": "plataforma-educar",
-          "value": "plataforma-educar"
+          "text": "escriba-browser-logging",
+          "value": "escriba-browser-logging"
         },
         "datasource": {
           "type": "loki",
@@ -377,8 +204,41 @@
         "useTags": false
       },
       {
+        "allValue": ".*",
         "current": {
           "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "level",
+        "options": [],
+        "query": {
+          "label": "level",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
           "text": "",
           "value": ""
         },
@@ -395,163 +255,11 @@
         "query": "",
         "skipUrlSync": false,
         "type": "textbox"
-      },
-      {
-        "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": {
-          "type": "loki",
-          "uid": "P8E80F9AEF21F6940"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Nível",
-        "multi": true,
-        "name": "level",
-        "options": [],
-        "query": {
-          "label": "level",
-          "refId": "LokiVariableQueryEditor-VariableQuery",
-          "stream": "",
-          "type": 1
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "loki",
-          "uid": "P8E80F9AEF21F6940"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "multi": false,
-        "name": "tenant",
-        "options": [],
-        "query": {
-          "label": "auth_tenant",
-          "refId": "LokiVariableQueryEditor-VariableQuery",
-          "stream": "",
-          "type": 1
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "loki",
-          "uid": "P8E80F9AEF21F6940"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Login",
-        "multi": false,
-        "name": "login",
-        "options": [],
-        "query": {
-          "label": "auth_login",
-          "refId": "LokiVariableQueryEditor-VariableQuery",
-          "stream": "",
-          "type": 1
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "loki",
-          "uid": "P8E80F9AEF21F6940"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Usuário",
-        "multi": false,
-        "name": "usuario",
-        "options": [],
-        "query": {
-          "label": "auth_nome",
-          "refId": "LokiVariableQueryEditor-VariableQuery",
-          "stream": "",
-          "type": 1
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "loki",
-          "uid": "P8E80F9AEF21F6940"
-        },
-        "definition": "",
-        "hide": 2,
-        "includeAll": true,
-        "label": "TraceId",
-        "multi": false,
-        "name": "traceId",
-        "options": [],
-        "query": {
-          "label": "traceId",
-          "refId": "LokiVariableQueryEditor-VariableQuery",
-          "stream": "",
-          "type": 1
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -572,6 +280,6 @@
   "timezone": "",
   "title": "Logs / App",
   "uid": "sadlil-loki-apps-dashboard",
-  "version": 16,
+  "version": 4,
   "weekStart": ""
 }
