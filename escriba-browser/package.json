@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mycloudlab/jslog"
+    "url": "https://github.com/mycloudlab/escriba"
   },
   "keywords": [
     "server",
@@ -31,7 +31,7 @@
     "email": "euprogramador@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/mycloudlab/jslog/issues"
+    "url": "https://github.com/mycloudlab/escriba/issues"
   },
   "license": "MIT",
   "devDependencies": {
