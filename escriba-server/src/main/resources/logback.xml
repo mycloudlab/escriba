@@ -1,0 +1,34 @@
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+
+	<appender name="gelf" class="biz.paluch.logging.gelf.logback.GelfLogbackAppender">
+		<host>udp:promtail</host>
+		<port>12201</port>
+		<version>1.1</version>
+		<facility>gelf</facility>
+		<extractStackTrace>true</extractStackTrace>
+		<filterStackTrace>true</filterStackTrace>
+		<includeLocation>true</includeLocation>
+		<mdcProfiling>true</mdcProfiling>
+		<timestampPattern>yyyy-MM-dd HH:mm:ss,SSS</timestampPattern>
+		<maximumMessageSize>8192</maximumMessageSize>
+		<includeFullMdc>true</includeFullMdc>
+	</appender>
+
+	<logger name="jslog" level="TRACE" additivity="false">
+		<appender-ref ref="gelf" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

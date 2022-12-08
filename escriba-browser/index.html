@@ -1,0 +1,58 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <script type="module" src="node_modules/stacktrace-js/dist/stacktrace.min.js"></script>
+    <script type="module" src="lib/escriba.js"></script>
+
+    <script type="module">
+        import { Escriba,HTTPTransport } from './lib/escriba.js';
+
+        window.logger = await Escriba.init({
+            transport: new HTTPTransport("http://localhost:8888/api/logs")
+        });
+
+
+
+
+    </script>
+    <script>
+        function fireInfo() {
+            logger.info("this a info", { b: 1 });
+        }
+        function fireInfoSemComp() {
+            logger.info("this a info");
+        }
+
+        function fireWarn() {
+            logger.warn("this a warn");
+        }
+
+
+        function fireDebug() {
+            logger.debug("this a debug");
+        }
+
+
+        function fireTrace() {
+            logger.trace("this a trace");
+        }
+
+        function fireError() {
+            throw new Error('this a error');
+        }
+    </script>
+
+    <button onclick="fireError()"> fireError </button>
+    <button onclick="fireWarn()"> fire Warn </button>
+    <button onclick="fireInfo()"> fire Info </button>
+    <button onclick="fireInfoSemComp()"> fire Info sem comp </button>
+    <button onclick="fireDebug()"> fire Debug </button>
+    <button onclick="fireTrace()"> fire Trace </button>
+
+</body>
+
+</html>
