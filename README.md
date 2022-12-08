@@ -19,7 +19,7 @@ In addition, the project uses Promtail to forward the logs to Loki for storage a
 - restriction on which domains are accepted for processing
 - customization and transformation of the request to obtain the application's source-map.
 
-## how to use
+## How to use
 
 An example docker-compose for running the application is provided:
 
@@ -48,7 +48,7 @@ Access the demo at http://localhost:8080 and click on the log trigger buttons. t
 
 for other available examples see the examples folder.
 
-## how to contribute
+## How to contribute
 
 This project is based on docker-compose, we use podman and podman-compose as runtime.
 
@@ -67,7 +67,7 @@ git clone https://github.com/mycloudlab/escriba.git
 
 4. Build the environment:
 ```bash
-cd scribe
+cd escriba
 dc build .
 ```
 
@@ -77,7 +77,9 @@ dc up -d
 ```
 
 6. access the component you want to evolve:
+
 dc exec [ browser | angular | server ] bash
+
 for example, if you are going to contribute to the server use:
 ```bash
 dc exec server bash
