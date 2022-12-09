@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.apache.hc.client5.http.fluent.Request;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.MDC;
 
@@ -19,11 +20,13 @@ public class LogServerConfig {
     private List<Pattern> allowedDomains = new ArrayList<>();
     private Map<Pattern, URL> translatedDomains = new HashMap<>();
     private Map<String, String> mdcExtraLabels = new HashMap<>();
+    private Map<String, String> sourceMapsRequestHeaders = new HashMap<>();
 
     public LogServerConfig(
             @ConfigProperty(name = "logserver.sourcemaps.allowed-domains") String _allowedDomains,
             @ConfigProperty(name = "logserver.sourcemaps.translate-domains") String _translateDomains,
-            @ConfigProperty(name = "logserver.mdc.extra-labels") String _mdcExtraLabels) {
+            @ConfigProperty(name = "logserver.mdc.extra-labels") String _mdcExtraLabels,
+            @ConfigProperty(name = "logserver.sourcemaps.request-extra-headers") String _sourceMapsRequestHeaders) {
         try {
             // configure allowed domains
             for (String domain : _allowedDomains.split(","))
@@ -42,6 +45,12 @@ public class LogServerConfig {
                 String key = keyval.split(":")[0];
                 String value = keyval.split(":")[1];
                 mdcExtraLabels.put(key, value);
+            }
+
+            for (String keyval : _sourceMapsRequestHeaders.split(",")) {
+                String key = keyval.split(":")[0];
+                String value = keyval.split(":")[1];
+                sourceMapsRequestHeaders.put(key, value);
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("configuration problem", e);
@@ -77,5 +86,12 @@ public class LogServerConfig {
         mdcExtraLabels.forEach((key, val) -> {
             MDC.put(key, val);
         });
+    }
+
+    public Request fillRequestExtraHeaders(Request request){
+        for (var key : sourceMapsRequestHeaders.keySet())
+            request = request.addHeader(key,sourceMapsRequestHeaders.get(key));
+
+        return request;
     }
 }

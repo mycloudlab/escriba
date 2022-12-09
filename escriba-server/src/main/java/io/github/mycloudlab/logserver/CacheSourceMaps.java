@@ -52,7 +52,9 @@ public class CacheSourceMaps {
 	}
 
 	private String loadContentSourceMapFromUrl(String urlSourceMapFile) throws Exception {
-		return Request.get(urlSourceMapFile).execute().returnContent().asString();
+		Request request = Request.get(urlSourceMapFile);
+		request = config.fillRequestExtraHeaders(request);
+		return request.execute().returnContent().asString();
 	}
 
 	private String generateUrlSourceMapFromFileName(String urlJSMinified, String sourceMapFileName)
