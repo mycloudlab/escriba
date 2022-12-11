@@ -21,8 +21,11 @@ jobs:
         with:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@mycloudlab'
       - run: |
           cd escriba-browser
+          ls -lah
+          npm run build
           npm version ${GITHUB_REF/refs\/tags\//}
           npm publish --public
         env:
