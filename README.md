@@ -23,15 +23,18 @@ See the archetecture:
 
 <img src="docs/images/flow.svg" style="width:100%">
 
-
+1. Add the npm library @mycloudlab/escriba-browser in your application, and configure accordingly according to the documentation
+2. Start the scribe-server, promtail, loki and grafana server, a docker-compose.yml is provided in the production example folder.
+3. Generate log events in the application
+4. Open the grafana dashboard and view the received logs.
 
 ## Features
 
-- multiple levels of frontend and server logs
+- Multiple levels of frontend and server logs
 - MDC (mapped diagnostic context) is supported
-- proper processing of sourcemaps on the server side
-- restriction on which domains are accepted for processing
-- customization and transformation of the request to obtain the application's source-map.
+- Proper processing of sourcemaps on the server side
+- Restriction on which domains are accepted for processing
+- Customization and transformation of the request to obtain the application's source-map.
 
 ## How to use
 
