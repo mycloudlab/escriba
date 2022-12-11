@@ -31,6 +31,8 @@ See the archetecture:
 ## Features
 
 - Multiple levels of frontend and server logs
+- Multiple transport formats fetch, xhr, websockets
+- Send logs with no blocking Main Thread
 - MDC (mapped diagnostic context) is supported
 - Proper processing of sourcemaps on the server side
 - Restriction on which domains are accepted for processing
