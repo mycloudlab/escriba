@@ -33,6 +33,6 @@ jobs:
         run: |
           cd escriba-server
           docker build --file src/main/docker/Dockerfile.builder --tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:latest .
-          docker tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:${{ steps.get_tag_name.outputs.VERSION }}
+          docker tag ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:latest ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:${GITHUB_REF/refs\/tags\//}
           docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server
-          docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:${{ steps.get_tag_name.outputs.VERSION }}
+          docker push ${{ secrets.DOCKER_CONTAINER_REGISTRY }}/mycloudlab/escriba-server:${GITHUB_REF/refs\/tags\//}
