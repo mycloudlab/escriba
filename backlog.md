@@ -8,3 +8,4 @@
 - [ ] publicar projeto no npm https://itnext.io/step-by-step-building-and-publishing-an-npm-typescript-package-44fe7164964c
 - [x] criar github actions
 - [ ] criar teste de carga do servidor 
+- [ ] minificar arquivo da lib javascript

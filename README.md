@@ -2,6 +2,13 @@
 
 Escriba is a complete solution for receiving and processing javascript logs with support for processing sourcemaps, integrated with Loki, Promtail, Grafana.
 
+[![Build](https://img.shields.io/github/workflow/status/mycloudlab/escriba/Continuous%20Delivery)](https://github.com/mycloudlab/escriba/actions/workflows/cd.yaml) 
+[![Release](https://img.shields.io/github/v/release/mycloudlab/escriba)](https://github.com/mycloudlab/escriba/releases) 
+[![License](https://img.shields.io/github/license/mycloudlab/escriba)](https://github.com/mycloudlab/escriba/blob/main/LICENSE) 
+[![NPM escriba-browser bundle size](https://img.shields.io/bundlephobia/minzip/@mycloudlab/escriba-browser?label=escriba-browser%20gzip)](https://www.npmjs.com/package/@mycloudlab/escriba-browser) 
+[![Docker escriba-server image size](https://img.shields.io/docker/image-size/mycloudlab/escriba-server?label=escriba-server&sort=semver)](https://hub.docker.com/repository/docker/mycloudlab/escriba-server) 
+
+
 Problems can occur, no one is immune to that. Log analysis is one of the development activities. However, javascript log processing is a pain point in many frontend architectures. Many frontend developers end up unaware, ignoring the error logs of the frontend layer. Corrections take longer, as there is a delay in identifying errors, since there is no proper collection.
 
 Escriba Stack comes to remedy this point. The solution is grouped into:

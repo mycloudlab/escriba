@@ -24,7 +24,6 @@ jobs:
           scope: '@mycloudlab'
       - run: |
           cd escriba-browser
-          ls -lah
           npm install
           npm run build
           npm version ${GITHUB_REF/refs\/tags\//}

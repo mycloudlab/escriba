@@ -20,7 +20,12 @@
     "server",
     "logging",
     "log",
-    "browser"
+    "browser",
+    "grafana",
+    "loki",
+    "promtail",
+    "gelf",
+    "MDC"
   ],
   "author": {
     "name": "Carlos Alberto",
