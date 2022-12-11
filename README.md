@@ -9,7 +9,7 @@ Escriba is a complete solution for receiving and processing javascript logs with
 [![Docker escriba-server image size](https://img.shields.io/docker/image-size/mycloudlab/escriba-server?label=escriba-server&sort=semver)](https://hub.docker.com/repository/docker/mycloudlab/escriba-server) 
 
 
-Problems can occur, no one is immune to that. Log analysis is one of the development activities. However, javascript log processing is a pain point in many frontend architectures. Many frontend developers end up unaware, ignoring the error logs of the frontend layer. Corrections take longer, as there is a delay in identifying errors, since there is no proper collection.
+Problems can occur, no one is immune to that. Log analysis is one of the development activities. However, javascript log processing is a pain point in many frontend architectures. Many front-end developers end up ignoring the front-end layer's error logs. Corrections take longer, as there is a delay in identifying errors, since there is no proper collection.
 
 Escriba Stack comes to remedy this point. The solution is grouped into:
 
@@ -18,6 +18,13 @@ Escriba Stack comes to remedy this point. The solution is grouped into:
 - **escriba-server** - application server that receives logs from the browser, processing the sourcemap properly.
 
 In addition, the project uses Promtail to forward the logs to Loki for storage and a grafana dashboard for viewing errors.
+
+See the archetecture:
+
+<img src="docs/images/g525.svg" style="width:100%">
+
+
+server Send request
 
 ## Features
 
