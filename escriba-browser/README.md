@@ -1,10 +1,6 @@
 # Escriba-Browser
 
-Esta biblioteca faz parte da solução mycloudlab/escriba. Ela serve para coletar os logs e enviar os dados de logging do frontend para o backend.
-
-
-
-
+This library is part of the mycloudlab/escriba solution. It serves to collect the logs and send the logging data from the frontend to the backend.
 
 ## Features
 
@@ -12,15 +8,15 @@ Esta biblioteca faz parte da solução mycloudlab/escriba. Ela serve para coleta
 - Multiple transport formats fetch, xhr, websockets
 - Send logs with no blocking Main Thread
 - MDC (mapped diagnostic context) is supported
-- Ignore source map processing in frontend
+- Ignore source map processing in frontend, source maps are processed in backend
 
 ## Usage
 
-
 To use the library you can do via unpkg cdn:
+
 ```html
 <script type="module" src="https://unpkg.com/stacktrace-js@2.0.2/dist/stacktrace.min.js"></script>
-<script type="module" src=https://unpkg.com/@mycloudlab/escriba-browser/dist/escriba.min.mjs></script>
+<script type="module" src="https://unpkg.com/@mycloudlab/escriba-browser/dist/escriba.min.mjs"></script>
 ```
 
 or use npm install:
@@ -29,7 +25,7 @@ or use npm install:
 npm i @mycloudlab/escriba-browser 
 ```
 
-Agora é necessário inicializar o Escriba:
+Now it is necessary to initialize Escriba:
 
 ```typescript
 import { Escriba, HTTPTransport } from '@mycloudlab/escriba-browser';
@@ -54,7 +50,7 @@ Escriba is very configurable, below are the possible initialization parameters:
 | Parameter name           | Description                                                                                                         | Options                                          | Default        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ | -------------- |
 | level                    | Used to determine browser logging level                                                                             | OFF, ERROR, WARN, INFO, DEBUG, TRACE             | LogLevel.TRACE |
-| enableServerLogging      | determines whether logs should be sent to the server                                                                | true, false                                      | false          |
+| enableServerLogging      | determines whether logs should be sent to the server                                                                | true, false                                      | true           |
 | serverLogLevel           | determines what level of logging will be sent to the server                                                         | OFF, ERROR, WARN, INFO, DEBUG, TRACE             | LogLevel.TRACE | 
 | transport                | determines how the log will be sent to the server                                                                   | NOOPTransport, HTTPTransport, WebSocketTransport | NOOPTransport  |
 | browserErrorHandler      | defines whether to manage browser errors globally, defining a Listener in the window.onerror event                  | true, false                                      | true           |
@@ -77,6 +73,17 @@ Log levels are hierarchical, so when defining:
 
 Each transport has specific parameters for its correct initialization. Below is a description of each available transport:
 
+#### NOOPTransport
+
+This transport does not send the message anywhere.
+
+#### HTTPTransport
+
+The HTTPTransport sends the requests using fetch api, it is necessary to pass the address of the backend api in the constructor.
+
+#### WebSocketTransport
+
+Websocket transport is being implemented.
 
 ### Mapped Diagnostic Context (MDC)
 
