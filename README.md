@@ -1,4 +1,4 @@
-# Escriba
+# <img src="docs/images/logo.svg" style="width:50px"> Escriba
 
 Escriba is a complete solution for receiving and processing javascript logs with support for processing sourcemaps, integrated with Loki, Promtail, Grafana.
 
