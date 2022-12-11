@@ -28,7 +28,7 @@ jobs:
           npm install
           npm run build
           npm version ${GITHUB_REF/refs\/tags\//}
-          npm publish --public
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
