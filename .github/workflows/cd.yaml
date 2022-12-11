@@ -15,7 +15,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
         with:
-          ref: ${GITHUB_REF/refs\/tags\//}
+          ref: ${{GITHUB_REF/refs\/tags\//}}
           fetch-depth: 0
 
       - name: Login to Docker Hub
