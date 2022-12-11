@@ -34,9 +34,9 @@ See the archetecture:
 - MDC (mapped diagnostic context) is supported
 - Proper processing of sourcemaps on the server side
 - Restriction on which domains are accepted for processing
-- Customization and transformation of the request to obtain the application's source-map.
+- Customization and transformation of the request to obtain the application's source-maps
 
-## How to use
+## Demonstration
 
 An example docker-compose for running the application is provided:
 
@@ -65,6 +65,8 @@ Access the demo at http://localhost:8080 and click on the log trigger buttons. t
 
 for other available examples see the examples folder.
 
+
+## Usage
 
 
 
