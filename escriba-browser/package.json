@@ -10,11 +10,7 @@
     "lint": "tslint -p tsconfig.json",
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "jest --config jestconfig.json",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "postversion": "git push && git push --tags"
+    "test": "jest --config jestconfig.json"
   },
   "repository": {
     "type": "git",
