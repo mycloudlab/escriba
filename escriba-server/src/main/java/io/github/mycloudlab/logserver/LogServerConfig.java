@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.apache.hc.client5.http.fluent.Request;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.jboss.logging.MDC;
 
 @ApplicationScoped
@@ -22,39 +23,59 @@ public class LogServerConfig {
     private Map<String, String> mdcExtraLabels = new HashMap<>();
     private Map<String, String> sourceMapsRequestHeaders = new HashMap<>();
 
-    public LogServerConfig(
-            @ConfigProperty(name = "logserver.sourcemaps.allowed-domains") String _allowedDomains,
-            @ConfigProperty(name = "logserver.sourcemaps.translate-domains") String _translateDomains,
-            @ConfigProperty(name = "logserver.mdc.extra-labels") String _mdcExtraLabels,
-            @ConfigProperty(name = "logserver.sourcemaps.request-extra-headers") String _sourceMapsRequestHeaders) {
-        try {
-            // configure allowed domains
-            for (String domain : _allowedDomains.split(","))
-                allowedDomains.add(Pattern.compile(domain));
+    public LogServerConfig() {
 
-            // configure translate domains
-            for (String keyval : _translateDomains.split(",")) {
+        // configure allowed domains
+        Optional<List<String>> _allowedDomains = ConfigProvider.getConfig()
+                .getOptionalValues("logserver.sourcemaps.allowed-domains", String.class);
+
+        if (_allowedDomains.isPresent()) {
+            _allowedDomains.get().forEach((domain) -> {
+                allowedDomains.add(Pattern.compile(domain));
+            });
+        }
+
+        // configure translate domains
+        Optional<List<String>> _translateDomains = ConfigProvider.getConfig()
+                .getOptionalValues("logserver.sourcemaps.translate-domains", String.class);
+
+        if (_translateDomains.isPresent()) {
+            _translateDomains.get().forEach((keyval) -> {
                 Pattern key = Pattern.compile(keyval.split("=")[0]);
                 URL value;
-                value = new URL(keyval.split("=")[1]);
+                try {
+                    value = new URL(keyval.split("=")[1]);
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException("configuration problem", e);
+                }
                 translatedDomains.put(key, value);
-            }
+            });
+        }
 
-            // configure extra labels mdc
-            for (String keyval : _mdcExtraLabels.split(",")) {
+        // configure extra labels mdc
+        Optional<List<String>> _mdcExtraLabels = ConfigProvider.getConfig()
+                .getOptionalValues("logserver.mdc.extra-labels", String.class);
+
+        if (_mdcExtraLabels.isPresent()) {
+            _mdcExtraLabels.get().forEach((keyval) -> {
                 String key = keyval.split(":")[0];
                 String value = keyval.split(":")[1];
                 mdcExtraLabels.put(key, value);
-            }
+            });
+        }
 
-            for (String keyval : _sourceMapsRequestHeaders.split(",")) {
+        // configure extra request headers sourcemap
+        Optional<List<String>> _sourceMapsRequestHeaders = ConfigProvider.getConfig()
+                .getOptionalValues("logserver.sourcemaps.request-extra-headers", String.class);
+
+        if (_sourceMapsRequestHeaders.isPresent()) {
+            _sourceMapsRequestHeaders.get().forEach((keyval) -> {
                 String key = keyval.split(":")[0];
                 String value = keyval.split(":")[1];
                 sourceMapsRequestHeaders.put(key, value);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("configuration problem", e);
+            });
         }
+
     }
 
     public boolean domainIsAllowed(String domain) {
@@ -88,9 +109,9 @@ public class LogServerConfig {
         });
     }
 
-    public Request fillRequestExtraHeaders(Request request){
-        for (var key : sourceMapsRequestHeaders.keySet())
-            request = request.addHeader(key,sourceMapsRequestHeaders.get(key));
+    public HttpUriRequest fillRequestExtraHeaders(HttpUriRequest request) {
+        for (String key : sourceMapsRequestHeaders.keySet())
+            request.addHeader(key, sourceMapsRequestHeaders.get(key));
 
         return request;
     }

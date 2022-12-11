@@ -9,7 +9,13 @@ import java.util.regex.Pattern;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.apache.hc.client5.http.fluent.Request;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import com.google.debugging.sourcemap.SourceMapConsumerFactory;
 import com.google.debugging.sourcemap.SourceMapParseException;
@@ -21,9 +27,9 @@ import io.quarkus.cache.CacheResult;
 public class CacheSourceMaps {
 
 	private LogServerConfig config;
-	
+
 	@Inject
-	public CacheSourceMaps(LogServerConfig config){
+	public CacheSourceMaps(LogServerConfig config) {
 		this.config = config;
 	}
 
@@ -52,9 +58,11 @@ public class CacheSourceMaps {
 	}
 
 	private String loadContentSourceMapFromUrl(String urlSourceMapFile) throws Exception {
-		Request request = Request.get(urlSourceMapFile);
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpUriRequest request = new HttpGet(urlSourceMapFile);
 		request = config.fillRequestExtraHeaders(request);
-		return request.execute().returnContent().asString();
+		HttpResponse response = client.execute(request);
+		return EntityUtils.toString(response.getEntity());
 	}
 
 	private String generateUrlSourceMapFromFileName(String urlJSMinified, String sourceMapFileName)
@@ -66,9 +74,12 @@ public class CacheSourceMaps {
 	}
 
 	private String getSourceMapFileNameFromJSMinifiedFile(String urlJSMinified) throws Exception {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpUriRequest request = new HttpGet(urlJSMinified);
+		HttpResponse response = client.execute(request);
 		try (
-				InputStream stream = Request.get(urlJSMinified).execute().returnContent().asStream();
-				Scanner scanner = new Scanner(stream);
+				InputStream stream = response.getEntity().getContent();
+				Scanner scanner = new Scanner(stream);//
 		) {
 			// search pattern
 			Pattern pattern = Pattern.compile(".*//# sourceMappingURL=", Pattern.DOTALL);

@@ -1,5 +1,6 @@
 <configuration>
-
+ 	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+ 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>
@@ -10,8 +11,8 @@
 
 
 	<appender name="gelf" class="biz.paluch.logging.gelf.logback.GelfLogbackAppender">
-		<host>udp:promtail</host>
-		<port>12201</port>
+		<host>${LOGSERVER_GELF_HOST:udp:promtail}</host>
+		<port>${LOGSERVER_GELF_PORT:12201}</port>
 		<version>1.1</version>
 		<facility>gelf</facility>
 		<extractStackTrace>true</extractStackTrace>
@@ -23,10 +24,11 @@
 		<includeFullMdc>true</includeFullMdc>
 	</appender>
 
-	<logger name="jslog" level="TRACE" additivity="false">
+	<logger name="jslog" level="${LOGSERVER_LOG_LEVEL:ALL}" min-level="ALL" additivity="false">
 		<appender-ref ref="gelf" />
 	</logger>
 
+	
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>

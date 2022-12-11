@@ -2,3 +2,4 @@ target
 .bash_history
 .quarkus
 .apt_generated_tests
+.m2

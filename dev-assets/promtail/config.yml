@@ -22,29 +22,21 @@ scrape_configs:
                 time: _Time
                 full_message: full_message
                 level: _Severity
-                loggerName: _LoggerName
                 stackTrace: _StackTrace
-                traceId: _traceId
-                spanId: _spanId
+
           - labels:
               layer:
               level:
               time:
               short_message:
-              request_path:
-              request_origin:
-              loggerName:
-              auth_login:
-              auth_tenant:
-              auth_nome:
-              traceId:
-              spanId:
-          - template:
-              source: output
-              template: '{{.level}} - {{.full_message}} {{ default "" .stackTrace }}'
+
           - template:
               source: level
-              template: "{{.level}} | lower"
-          - output:
+              template: "{{ .level  | lower }}"
+
+          - template:
               source: output
-    
+              template: '{{.level}} - {{ .full_message }} {{ default "" .stackTrace }}'
+
+          - output:
+             source: output

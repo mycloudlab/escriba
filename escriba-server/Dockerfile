@@ -1,5 +1,3 @@
-FROM maven:3.8-openjdk-17-slim
-
+FROM quay.io/quarkus/ubi-quarkus-mandrel-builder-image:22.3-java17
 
 WORKDIR /escriba-server
-
