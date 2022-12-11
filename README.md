@@ -21,10 +21,9 @@ In addition, the project uses Promtail to forward the logs to Loki for storage a
 
 See the archetecture:
 
-<img src="docs/images/g525.svg" style="width:100%">
+<img src="docs/images/flow.svg" style="width:100%">
 
 
-server Send request
 
 ## Features
 
