@@ -31,6 +31,8 @@ export type EscribaConfig = {
    * instrument console.log functions to redirect messages do escriba.
    */
   instrumentConsoleLogging?: boolean;
+
+  defaultMDCContext:  { [key: string]: any };
 };
 
 /**
@@ -152,6 +154,7 @@ export const defaultConfig: EscribaConfig = {
   transport: new NOOPTransport(),
   browserErrorHandler: true,
   instrumentConsoleLogging: true,
+  defaultMDCContext: {}
 };
 
 export class MDC {
@@ -243,7 +246,7 @@ export class Logger {
       level: level,
       datetime: datetime,
       message: message,
-      mdc: { ...this.mdc.entries() },
+      mdc: { ...this.config.defaultMDCContext, ...this.mdc.entries() },
       stacktrace: stackFrame,
     };
 

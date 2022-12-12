@@ -29,7 +29,7 @@ async function init() {
 
     // initialize escriba logger
     logger = await Escriba.init({
-        transport: new HTTPTransport("http://localhost:8888/api/logs")
+        transport: new HTTPTransport("http://localhost:8888/logs")
     });
 
     // configure event listeners of buttons to fire logger
