@@ -1,4 +1,4 @@
-import { report, StackFrame } from 'stacktrace-js';
+import { StackFrame, fromError  } from 'stacktrace-js';
 /**
  * Escriba config logging
  */
@@ -89,27 +89,47 @@ export class NOOPTransport implements Transport {
   init(config: EscribaConfig): Promise<Transport> {
     return Promise.resolve(this);
   }
-  send(log: LogMessage, ...extra: any): void {}
+  send(log: LogMessage, ...extra: any): void { }
 }
 
 /**
  * this implementation of Transport use fetch api to send data to server
  */
 export class HTTPTransport implements Transport {
-  constructor(private url: string) {}
+
+  private url: string;
+  private customHeaders: { [key: string]: string } = {};
+
+  constructor(url: string);
+  constructor(url: string, customHeaders: { [key: string]: string });
+
+  constructor(...arr: any[]) {
+
+    this.url = arr[0];
+
+    if (arr.length == 2)
+      this.customHeaders = arr[1];
+
+  }
 
   init(config: EscribaConfig): Promise<Transport> {
     return Promise.resolve(this);
   }
 
   send(log: LogMessage, ...extra: any): void {
-    const requestOptions = {
+    const requestOptions: any = {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       body: JSON.stringify({ logs: [log] }),
     };
+
+
+    Object.keys(this.customHeaders).forEach((key: string) => {
+      requestOptions.headers[key] = this.customHeaders[key];
+    });
+
     fetch(this.url, requestOptions);
   }
 }
@@ -122,12 +142,12 @@ export class WebSocketTransport implements Transport {
     throw new Error('Method not implemented.');
   }
 
-  send(log: LogMessage, ...extra: any): void {}
+  send(log: LogMessage, ...extra: any): void { }
 }
 
 export const defaultConfig: EscribaConfig = {
   level: LogLevel.TRACE,
-  enableServerLogging: false,
+  enableServerLogging: true,
   serverLogLevel: LogLevel.TRACE,
   transport: new NOOPTransport(),
   browserErrorHandler: true,
@@ -210,8 +230,8 @@ export class Logger {
   private async log(level: LogLevel, message: string, error?: Error, ...extra: any): Promise<void> {
     let stackFrame: StackFrame[];
 
-    if (error == undefined) stackFrame = []; //await StackTrace.get({ offline: false });
-    else stackFrame = await StackTrace.fromError(error, { offline: false });
+    if (error == undefined) stackFrame = []; //await get({ offline: false });
+    else stackFrame = await fromError(error, { offline: false });
 
     let dt = new Date();
     let datetime = `${dt.toLocaleDateString('sv')} ${dt.toLocaleTimeString('sv')}.${dt
@@ -230,7 +250,7 @@ export class Logger {
     if (levelCode[log.level.toString()] <= levelCode[this.config.level?.toString() ?? 'off'])
       this.report(log, error, ...extra);
 
-    if (levelCode[log.level.toString()] <= levelCode[this.config.serverLogLevel?.toString() ?? 'off']) {
+    if (this.config.enableServerLogging && levelCode[log.level.toString()] <= levelCode[this.config.serverLogLevel?.toString() ?? 'off']) {
       this.config.transport?.send(log, ...extra);
     }
   }
