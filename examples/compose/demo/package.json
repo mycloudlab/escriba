@@ -1,23 +1,20 @@
 {
   "name": "demo",
   "version": "1.0.0",
-  "description": "",
-  "source": "src/index.js",
-  "module": "dist/module.js",
-  "main": "dist/main.js",
-  "types": "dist/types.d.ts",
+  "description": "escriba demo application",
   "scripts": {
-    "build": "parcel build packages/*",
-    "start": "parcel src/index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf .parcel-cache dist && parcel build src/index.html",
+    "start": "rimraf .parcel-cache dist && parcel src/index.html",
+    "app": "npm run build && http-server dist"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@mycloudlab/escriba-browser": "^0.8.14",
-    "stacktrace-js": "^2.0.2"
+    "@mycloudlab/escriba-browser": "^0.8.14"
   },
   "devDependencies": {
-    "parcel": "^2.8.1"
+    "http-server": "^14.1.1",
+    "parcel": "^2.8.1",
+    "rimraf": "^3.0.2"
   }
 }

@@ -10,7 +10,31 @@
 </head>
 
 <body>
-  <button onclick="fireInfo()">Fire info log message</button>
+  <h1><img src="logo.svg" style="width:50px"/>Escriba demo test</h1>
+
+  <p>
+    click the buttons below to trigger a log message, the console can be inspected, messages are sent to the loki server via mycloudlab scribe-server.
+    </p> 
+    <p>
+    You can also set in the context of the logs extra information using the MDC, in this example the user's current IP information is attached, but any extra information could be added
+  </p>
+
+  <fieldset id="actions">
+    <legend>test log messages</legend>
+    <button id="syntax-error" title="fire syntax error to demonstrate escriba global error handler (window.onerrror)">Fire syntax error</button>
+    <button id="error" title="fire generated error (new Error)">Fire error</button>
+    <button id="warn" title="fire warn log message">Fire warn</button>
+    <button id="info" title="fire info log message">Fire info</button>
+    <button id="debug" title="fire debug log message">Fire debug</button>
+    <button id="trace" title="fire trace log message">Fire trace</button>
+    <p/>
+    <button id="mdc-set" title="set mapped diagnostic context data">Set MDC with the current IP</button>
+    <button id="mdc-clear-all" title="clear all data in mapped diagnostic context">clear all MDC data</button>
+    
+  </fieldset>
+
+  <div id="log"></div>
+
   <script type="module" src="index.js"></script>
 </body>
 

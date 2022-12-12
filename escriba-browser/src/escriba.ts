@@ -1,4 +1,4 @@
-import { StackFrame, fromError  } from 'stacktrace-js';
+import { StackFrame, fromError } from 'stacktrace-js';
 /**
  * Escriba config logging
  */
@@ -257,8 +257,9 @@ export class Logger {
 
   private report(log: LogMessage, error?: Error, ...extra: any) {
     let line = `[${log.datetime}] - ${log.level} - ${JSON.stringify(log.mdc)} - ${log.message}`;
-    let lineError = `[${log.datetime}] - ${log.level} - ${JSON.stringify(log.mdc)}`;
-    if (log.level == LogLevel.ERROR) consoleFn[log.level.toLocaleLowerCase()](lineError, error, ...extra);
+    let lineError = `[${log.datetime}] - ${log.level} - ${JSON.stringify(log.mdc)} - ${log.message}`;
+  
+    if (log.level == LogLevel.ERROR) consoleFn[log.level.toLocaleLowerCase()](lineError, error);
     else if (extra !== undefined) consoleFn[log.level.toLocaleLowerCase()](line, ...extra);
     else consoleFn[log.level.toLocaleLowerCase()](line);
   }

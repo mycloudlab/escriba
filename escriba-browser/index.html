@@ -5,9 +5,9 @@
 </head>
 
 <body>
-    <script type="module" src="https://unpkg.com/stacktrace-js@2.0.2/dist/stacktrace.min.js"></script>
+
     <script type="module">
-        import { Escriba,HTTPTransport } from './dist/escriba.mjs';
+        import { Escriba,HTTPTransport } from './dist/escriba.min.mjs';
 
         window.logger = await Escriba.init({
             transport: new HTTPTransport("http://localhost:8888/api/logs")
