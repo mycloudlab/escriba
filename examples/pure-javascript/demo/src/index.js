@@ -29,7 +29,8 @@ async function init() {
 
     // initialize escriba logger
     logger = await Escriba.init({
-        transport: new HTTPTransport("http://localhost:8888/logs")
+        transport: new HTTPTransport("http://localhost:8888/logs"),
+        defaultMDCContext: { app: 'demo', app_version: '1.0.0' }
     });
 
     // configure event listeners of buttons to fire logger

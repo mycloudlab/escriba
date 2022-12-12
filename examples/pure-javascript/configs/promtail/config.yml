@@ -1,0 +1,49 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: gelf
+  gelf: 
+    listen_address: 0.0.0.0:12201
+    labels:
+      job: escriba-browser-logging
+  pipeline_stages:
+    - match: 
+        selector: '{job="escriba-browser-logging"}'
+        stages:
+          - json:
+              expressions:
+                layer: _layer
+                time: _Time
+                full_message: full_message
+                level: _Severity
+                stackTrace: _StackTrace
+                app: _app
+                app_version: _app_version
+                currentIP: _currentIP
+
+
+          - labels:
+              layer:
+              level:
+              time:
+              short_message:
+              app:
+              app_version:
+              currentIP:
+
+          - template:
+              source: level
+              template: "{{ .level  | lower }}"
+
+          - template:
+              source: output
+              template: '{{.level}} - {{ .full_message }} {{ default "" .stackTrace }}'
+
+          - output:
+             source: output
